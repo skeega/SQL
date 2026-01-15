@@ -197,3 +197,41 @@ LEFT JOIN reservations
 ON reservations.hotel = hotels.hotel_id
 GROUP BY hotels.hotel_name
 ;
+-- 7. [Wildcard Use]--
+SELECT event_name
+FROM events
+WHERE event_name LIKE '%chang%'
+;
+--In SQLLite this way:
+SELECT event_name
+FROM events
+WHERE event_name LIKE '%a%'
+OR event_name LIKE '%n%'
+OR event_name LIKE '%c%'
+;
+--In MySQL, we can combine those three searches into one with [ ], like this:
+SELECT event_name
+FROM events
+WHERE event_name LIKE '%[anc]'
+;
+--Use _ for any in-between info search
+SELECT event_name 
+FROM events
+WHERE event_name LIKE '%a_d%'
+;
+--Underscore wildcard is really a character in the field:
+SELECT event_name
+FROM events
+WHERE event_name LIKE '%!_%'
+ESCAPE '!'
+;
+--Search for dates starting with 19
+SELECT member_since
+FROM vips
+WHERE member_since like '19%'
+;
+--Search for dates in a range (if was date formatted)
+SELECT member_since
+FROM vips
+WHERE member_since between '198%' AND '199%'
+;
